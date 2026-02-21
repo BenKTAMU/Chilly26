@@ -1,13 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class healthAndDamage : MonoBehaviour
 {
 
-    public double health = 100.0;
-    public double total_health = 100;
+    public float health = 100.0f;
+    public float total_health = 100f;
 
-    public double hit_amount = 5;
-    public double smack_amount = 50;
+    public float hit_amount = 5.0f;
+    public float smack_amount = 50.0f;
+    
+    public Image healthBar;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,12 +27,14 @@ public class healthAndDamage : MonoBehaviour
     public void hit()
     {
         health -= hit_amount;
+        healthBar.fillAmount = health / total_health;
         Debug.Log("Hit: " + health);
     }
 
     public void smack()
     {
         health -= smack_amount;
+        healthBar.fillAmount = health / total_health;
         Debug.Log("Smacked: " + health);
     }
 }
