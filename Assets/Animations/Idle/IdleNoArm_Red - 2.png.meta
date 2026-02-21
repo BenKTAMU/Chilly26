@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 94056ff681a6fcf479c7fd0031c6eb3f
+guid: f99f5afe9bdf1554496e13d25631f55b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3952475046492954744
-    second: Knight Character - 3_0
+      213: -1105623301995703543
+    second: IdleNoArm_Red - 2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Knight Character - 3_0
+      name: IdleNoArm_Red - 2_0
       rect:
         serializedVersion: 2
-        x: 51
+        x: 311
         y: 181
-        width: 1276
-        height: 1769
+        width: 860
+        height: 1692
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 88f1136e2ecf529c0800000000000000
-      internalID: -3952475046492954744
+      spriteID: 903d625f67908a0f0800000000000000
+      internalID: -1105623301995703543
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Knight Character - 3_0: -3952475046492954744
+      IdleNoArm_Red - 2_0: -1105623301995703543
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
