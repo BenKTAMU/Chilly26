@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class confidence : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class confidence : MonoBehaviour
     private movement_controller controller;
     
     private double confidenceMultiplier = 1;
+    
+    public Image confidenceBar;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,7 +34,9 @@ public class confidence : MonoBehaviour
     {
         while (true)
         {
-            confidenceMultiplier += 0.1;
+            confidenceMultiplier += 0.5f;
+                confidenceBar.fillAmount = (float)(confidenceMultiplier / 5.0);
+                if (confidenceMultiplier > 5) confidenceMultiplier = 5;
             yield return new WaitForSeconds(1f);
         }
     }
