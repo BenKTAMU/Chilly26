@@ -7,9 +7,9 @@ public class projectile : MonoBehaviour
     public Vector2 direction;
 
     public float lifetime = 2f;
-    
-    
-    
+
+    public string sender;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,22 +20,22 @@ public class projectile : MonoBehaviour
     void Update()
     {
         transform.Translate(direction * projectileSpeed * Time.deltaTime);
-        
+
     }
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag(sender)) return;
         if (other.CompareTag("Player 1") || other.CompareTag("Player 2"))
         {
             double confidence = other.GetComponent<confidence>().getMultiplier();
             other.GetComponent<confidence>().resetMultiplier();
-            
-            
-            Debug.Log("Player hit!");
+
+            other.GetComponent<healthAndDamage>().smack();
         }
-        
-        
-        
+
+
+
         Destroy(gameObject);
     }
 }

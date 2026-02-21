@@ -28,6 +28,16 @@ public class movement_controller : MonoBehaviour
         rangedAttack = GetComponent<rangedAttack>();
     }
 
+    void Rumble()
+    {
+        Gamepad gp = null;
+        if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
+        if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
+        if (gp == null) return;
+
+        
+    }
+
     void MovePlayer(Vector2 amount)
     {
         rb.AddForce(amount.x * acceleration * Vector2.right);

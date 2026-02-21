@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 154896286}
   - component: {fileID: 154896287}
   - component: {fileID: 154896288}
+  - component: {fileID: 154896289}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -241,7 +242,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -257,6 +258,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &154896289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154896285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6eb8631e9bdc14e8cca1d7d1e5768c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &181935595
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +588,7 @@ GameObject:
   - component: {fileID: 693239312}
   - component: {fileID: 693239313}
   - component: {fileID: 693239314}
+  - component: {fileID: 693239315}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -686,7 +700,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -702,6 +716,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &693239315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693239311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6eb8631e9bdc14e8cca1d7d1e5768c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitScript
 --- !u!1 &1034233757
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,6 +882,7 @@ GameObject:
   - component: {fileID: 1439649415}
   - component: {fileID: 1439649417}
   - component: {fileID: 1439649416}
+  - component: {fileID: 1439649418}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player 2
@@ -1071,6 +1098,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::meleeAttack
   sr: {fileID: 693239313}
+--- !u!114 &1439649418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439649409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c364ff3e9fa1f4c82fa7de47c1f038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::healthAndDamage
+  health: 100
+  hit_amount: 5
+  smack_amount: 50
 --- !u!1 &1645344906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,6 +1267,7 @@ GameObject:
   - component: {fileID: 1672170845}
   - component: {fileID: 1672170847}
   - component: {fileID: 1672170846}
+  - component: {fileID: 1672170848}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player 1
@@ -1440,6 +1483,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::meleeAttack
   sr: {fileID: 154896287}
+--- !u!114 &1672170848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672170839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c364ff3e9fa1f4c82fa7de47c1f038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::healthAndDamage
+  health: 100
+  hit_amount: 5
+  smack_amount: 50
 --- !u!1 &1855753693
 GameObject:
   m_ObjectHideFlags: 0

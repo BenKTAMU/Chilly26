@@ -40,7 +40,12 @@ public class rangedAttack : MonoBehaviour
 
     public void SetAim(Vector2 direction)
     {
-        if (direction != Vector2.zero) aimDirection = direction.normalized;
+        if (direction.x != 0)
+        {
+            aimDirection = direction;
+            aimDirection.y = 0;
+            aimDirection = aimDirection.normalized;
+        }
     }
 
     /*void Aim()
@@ -62,7 +67,7 @@ public class rangedAttack : MonoBehaviour
         Vector3 aimDirection3 = aimDirection * startOffsetAmount;
 
         GameObject projectile = Instantiate(projectilePrefab, launchPoint.position + aimDirection3, Quaternion.identity);
-        Debug.Log(projectile + ", " + aimDirection);
         projectile.GetComponent<projectile>().direction = aimDirection;
+        projectile.GetComponent<projectile>().sender = gameObject.tag;
     }
 }
