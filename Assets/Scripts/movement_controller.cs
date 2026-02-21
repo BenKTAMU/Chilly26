@@ -33,9 +33,11 @@ public class movement_controller : MonoBehaviour
         Gamepad gp = null;
         if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
         if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
+        Debug.Log("Will it rumble?");
         if (gp == null) return;
+        Debug.Log("Rumbing");
 
-        
+        gp.SetMotorSpeeds(1.0f, 1.0f);
     }
 
     void MovePlayer(Vector2 amount)
@@ -48,6 +50,7 @@ public class movement_controller : MonoBehaviour
         {
             if (isGrounded)
             {
+                Rumble();
                 rb.linearVelocityY = jump_force;
                 startJump = Time.time;
             }
