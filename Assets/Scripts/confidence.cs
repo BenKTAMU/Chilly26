@@ -19,11 +19,11 @@ public class confidence : MonoBehaviour
         float distance = Vector2.Distance(transform.position, otherCharacter.position);
         if (controller.player1)
         {
-            Debug.Log("Player 1: " + distance);
+        //    Debug.Log("Player 1: " + distance);
         }
         else
         {
-            Debug.Log("Player 2: " + distance);
+        //    Debug.Log("Player 2: " + distance);
         }
     }
 }

@@ -68,12 +68,12 @@ public class movement_controller : MonoBehaviour
                 amount.y = 1;
             }
 
-            if (gp.bButton.isPressed)
+            if (gp.xButton.isPressed)
             {
-                meleeAttack.Hit();
+                meleeAttack.Hit(amount);
             }
 
-            if (gp.rightShoulder.isPressed)
+            if (gp.rightTrigger.isPressed)
             {
                 Vector2 direction = new Vector2();
                 direction.x = x;
