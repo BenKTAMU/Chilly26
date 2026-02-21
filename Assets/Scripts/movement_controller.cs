@@ -17,10 +17,15 @@ public class movement_controller : MonoBehaviour
 
     private float startJump = -1;
 
+    private meleeAttack meleeAttack;
+    private rangedAttack rangedAttack;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        meleeAttack = GetComponent<meleeAttack>();
+        rangedAttack = GetComponent<rangedAttack>();
     }
 
     void MovePlayer(Vector2 amount)
@@ -61,6 +66,22 @@ public class movement_controller : MonoBehaviour
             if (gp.aButton.isPressed)
             {
                 amount.y = 1;
+            }
+
+            if (gp.bButton.isPressed)
+            {
+                meleeAttack.Hit();
+            }
+
+            if (gp.rightShoulder.isPressed)
+            {
+                Vector2 direction = new Vector2();
+                direction.x = x;
+                direction.y = gp.leftStick.up.magnitude;
+                if (direction.y == 0) direction.y = -gp.leftStick.down.magnitude;
+
+                rangedAttack.SetAim(direction);
+                rangedAttack.Shoot();
             }
 
             MovePlayer(amount);

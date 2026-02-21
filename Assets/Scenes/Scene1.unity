@@ -868,6 +868,8 @@ GameObject:
   - component: {fileID: 1672170841}
   - component: {fileID: 1672170840}
   - component: {fileID: 1672170844}
+  - component: {fileID: 1672170846}
+  - component: {fileID: 1672170845}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1039,6 +1041,34 @@ MonoBehaviour:
   max_speed: 7
   max_jump_time: 0.3
   player1: 1
+--- !u!114 &1672170845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672170839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772962b8601aacb47a38ef5b702caf4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::rangedAttack
+  projectilePrefab: {fileID: 0}
+  launchPoint: {fileID: 0}
+  shotCooldown: 0.5
+--- !u!114 &1672170846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672170839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8c2e1fab51a5ae468a0fa08067de4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::meleeAttack
+  sr: {fileID: 0}
 --- !u!1 &2010663880
 GameObject:
   m_ObjectHideFlags: 0
