@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class movement_controller : MonoBehaviour
 {
@@ -31,6 +32,9 @@ public class movement_controller : MonoBehaviour
     private Animator animator;
 
     private Vector2 last_direction;
+    
+    public Image healthBar;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,6 +54,9 @@ public class movement_controller : MonoBehaviour
         health.health = health.total_health;
         animator.SetBool("going_down", true);
         animator.SetBool("going_up", false);
+        rb.linearVelocity = Vector2.zero;
+        healthBar.fillAmount = 1;
+        confidence.resetMultiplier();
     }
 
     void Rumble(float lowFreq, float highFreq, float duration)
@@ -136,7 +143,7 @@ public class movement_controller : MonoBehaviour
                 meleeAttack.Hit(amount);
             }
 
-            if (gp.rightTrigger.isPressed)
+            if (gp.rightTrigger.isPressed && confidence.getMultiplier() == 5)
             {
                 Vector2 direction = new Vector2();
                 direction.x = x;
@@ -148,12 +155,13 @@ public class movement_controller : MonoBehaviour
 
                 leftPower = 0.5f;
                 rightPower = 0f;
+                
+                confidence.resetMultiplier();
 
 
             }
 
 
-            Debug.Log(rightPower + " " + leftPower);
             if (amount.x < 0)
             {
                 leftPower = rightPower;
