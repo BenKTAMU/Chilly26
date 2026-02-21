@@ -2,21 +2,14 @@ using UnityEngine;
 
 public class confidence : MonoBehaviour
 {
-    private Transform otherCharacter;
+    public Transform otherCharacter;
     
     private movement_controller controller;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(controller.player1)
-        {
-            otherCharacter = GameObject.FindWithTag("Player 2").transform;
-        }
-        else
-        {
-            otherCharacter = GameObject.FindWithTag("Player 1").transform;
-        }
+
     }
 
     // Update is called once per frame
