@@ -17,9 +17,7 @@ public class rangedAttack : MonoBehaviour
     
     private Vector2 aimDirection = Vector2.right;
 
-    private InputSystem_Actions controls;
     
-    private mover movementController;
     
     
     
@@ -31,9 +29,7 @@ public class rangedAttack : MonoBehaviour
 
     void Awake()
     {
-        controls = new InputSystem_Actions();
-        controls.Player.Attack.performed += ctx => Shoot();
-        movementController = GetComponent<mover>();
+
     }
 
     // Update is called once per frame
@@ -46,7 +42,7 @@ public class rangedAttack : MonoBehaviour
 
         Aim();
 
-        if (Input.GetKeyDown(KeyCode.E) && shotTimer <= 0 && movementController.player1 || Input.GetKeyDown(KeyCode.RightShift) && shotTimer <= 0 && !movementController.player1)
+        if (Input.GetKeyDown(KeyCode.E) && shotTimer <= 0  || Input.GetKeyDown(KeyCode.RightShift) && shotTimer <= 0)
         {
             Shoot();
             shotTimer = shotCooldown;
@@ -70,13 +66,5 @@ public class rangedAttack : MonoBehaviour
         projectile.GetComponent<projectile>().direction = aimDirection;
     }
 
-    void OnEnable()
-    {
-        controls.Player.Enable();
-    }
 
-    void OnDisable()
-    {
-        controls.Player.Disable();
-    }
 }
