@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,9 @@ public class movement_controller : MonoBehaviour
 
     private meleeAttack meleeAttack;
     private rangedAttack rangedAttack;
+    
+    private float leftPower = -1.0f;
+    private float rightPower = -1.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,16 +32,20 @@ public class movement_controller : MonoBehaviour
         rangedAttack = GetComponent<rangedAttack>();
     }
 
-    void Rumble()
+    void Rumble(float lowFreq, float highFreq, float duration)
     {
         Gamepad gp = null;
         if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
         if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
-        Debug.Log("Will it rumble?");
         if (gp == null) return;
-        Debug.Log("Rumbing");
-
-        gp.SetMotorSpeeds(1.0f, 1.0f);
+        //StartCoroutine(RumbleCoroutine(lowFreq, highFreq, duration, gp));
+    }
+    
+    private IEnumerator RumbleCoroutine(float lowFreq, float highFreq, float duration, Gamepad gp)
+    {
+        gp.SetMotorSpeeds(lowFreq, highFreq);
+        yield return new WaitForSeconds(duration);
+        gp.SetMotorSpeeds(0, 0);
     }
 
     void MovePlayer(Vector2 amount)
@@ -50,7 +58,6 @@ public class movement_controller : MonoBehaviour
         {
             if (isGrounded)
             {
-                Rumble();
                 rb.linearVelocityY = jump_force;
                 startJump = Time.time;
             }
@@ -95,8 +102,47 @@ public class movement_controller : MonoBehaviour
 
                 rangedAttack.SetAim(direction);
                 rangedAttack.Shoot();
+
+                leftPower = 0.5f;
+                rightPower = 0f;
+                
+                
+            }
+            
+            
+            Debug.Log(rightPower + " " +leftPower);
+            if (amount.x < 0)
+            {
+                leftPower = rightPower;
+                rightPower = leftPower;
+            }
+            if (rightPower > -0.01)
+            {
+                gp.SetMotorSpeeds(leftPower, rightPower);
+
+                if (leftPower > 0)
+                {
+                    leftPower -= 0.2f;
+                }
+                else 
+                {
+                    leftPower = 0;
+                    rightPower += 0.1f;
+                    if (rightPower > 0.5f)
+                    {
+                        rightPower = -1.0f;
+                        
+                    }
+                }
+            }
+            else
+            {
+                gp.SetMotorSpeeds(0, 0);
             }
 
+            
+            
+           
             MovePlayer(amount);
         }
         else

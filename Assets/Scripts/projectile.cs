@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class projectile : MonoBehaviour
 {
-    public float projectileSpeed = 8f;
+    public float projectileSpeed = 10f;
 
     public Vector2 direction;
 

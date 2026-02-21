@@ -15,6 +15,8 @@ public class rangedAttack : MonoBehaviour
     private Vector2 aimDirection = Vector2.right;
 
     public float startOffsetAmount = 1;
+    
+    
 
 
 

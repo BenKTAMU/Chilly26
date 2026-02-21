@@ -47,6 +47,7 @@ MonoBehaviour:
   projectileSpeed: 8
   direction: {x: 0, y: 0}
   lifetime: 2
+  sender: 
 --- !u!1 &6606379746512051277
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,9 +154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d56cc6e73f16bb48bd6056f92e711ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::projectile
-  projectileSpeed: 8
+  projectileSpeed: 15
   direction: {x: 0, y: 0}
   lifetime: 2
+  sender: 
 --- !u!61 &-6474270795003477193
 BoxCollider2D:
   m_ObjectHideFlags: 0
