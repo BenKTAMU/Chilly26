@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class confidence : MonoBehaviour
@@ -5,11 +6,14 @@ public class confidence : MonoBehaviour
     public Transform otherCharacter;
 
     private movement_controller controller;
-
+    
+    private double confidenceMultiplier = 1;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         controller = GetComponent<movement_controller>();
+        StartCoroutine(IncreaseConfidence());
     }
 
     // Update is called once per frame
@@ -17,13 +21,28 @@ public class confidence : MonoBehaviour
     {
 
         float distance = Vector2.Distance(transform.position, otherCharacter.position);
-        if (controller.player1)
+
+        
+    }
+    
+    
+
+    private IEnumerator IncreaseConfidence()
+    {
+        while (true)
         {
-        //    Debug.Log("Player 1: " + distance);
+            confidenceMultiplier += 0.1;
+            yield return new WaitForSeconds(1f);
         }
-        else
-        {
-        //    Debug.Log("Player 2: " + distance);
-        }
+    }
+
+    public void resetMultiplier()
+    {
+        confidenceMultiplier = 1;
+    }
+    
+    public double getMultiplier()
+    {
+        return confidenceMultiplier;
     }
 }
