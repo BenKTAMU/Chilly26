@@ -20,13 +20,17 @@ public class movement_controller : MonoBehaviour
 
     private meleeAttack meleeAttack;
     private rangedAttack rangedAttack;
-    
+
     private float leftPower = -1.0f;
     private float rightPower = -1.0f;
 
     public Transform start_position;
     private healthAndDamage health;
     private confidence confidence;
+    private SpriteRenderer sr;
+    private Animator animator;
+
+    private Vector2 last_direction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,12 +40,16 @@ public class movement_controller : MonoBehaviour
         rangedAttack = GetComponent<rangedAttack>();
         health = GetComponent<healthAndDamage>();
         confidence = GetComponent<confidence>();
+        sr = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     public void Reset()
     {
         rb.transform.position = start_position.position;
         health.health = health.total_health;
+        animator.SetBool("going_down", true);
+        animator.SetBool("going_up", false);
     }
 
     void Rumble(float lowFreq, float highFreq, float duration)
@@ -52,7 +60,7 @@ public class movement_controller : MonoBehaviour
         if (gp == null) return;
         StartCoroutine(RumbleCoroutine(lowFreq, highFreq, duration, gp));
     }
-    
+
     private IEnumerator RumbleCoroutine(float lowFreq, float highFreq, float duration, Gamepad gp)
     {
         gp.SetMotorSpeeds(lowFreq, highFreq);
@@ -66,10 +74,19 @@ public class movement_controller : MonoBehaviour
         if (Math.Abs(rb.linearVelocityX) > max_speed)
             rb.linearVelocity = new Vector2(max_speed * Math.Sign(rb.linearVelocityX), rb.linearVelocityY);
 
+        sr.flipX = amount.x < 0 || (amount.x == 0 && last_direction.x < 0);
+        if (amount.x != 0) last_direction.x = amount.x;
+
+        bool just_started_up = false;
+
         if (amount.y > 0)
         {
             if (isGrounded)
             {
+                animator.Play("Jump Up");
+                just_started_up = true;
+                animator.SetBool("going_up", true);
+                animator.SetBool("going_down", false);
                 rb.linearVelocityY = jump_force;
                 startJump = Time.time;
             }
@@ -81,6 +98,14 @@ public class movement_controller : MonoBehaviour
                 }
             }
         }
+
+        else if (rb.linearVelocityY < -0.1)
+        {
+            animator.Play("Jump Down");
+            animator.SetBool("going_down", true);
+            animator.SetBool("going_up", false);
+        }
+
     }
 
     void FixedUpdate()
@@ -123,12 +148,12 @@ public class movement_controller : MonoBehaviour
 
                 leftPower = 0.5f;
                 rightPower = 0f;
-                
-                
+
+
             }
-            
-            
-            Debug.Log(rightPower + " " +leftPower);
+
+
+            Debug.Log(rightPower + " " + leftPower);
             if (amount.x < 0)
             {
                 leftPower = rightPower;
@@ -142,14 +167,14 @@ public class movement_controller : MonoBehaviour
                 {
                     leftPower -= 0.2f;
                 }
-                else 
+                else
                 {
                     leftPower = 0;
                     rightPower += 0.1f;
                     if (rightPower > 0.5f)
                     {
                         rightPower = -1.0f;
-                        
+
                     }
                 }
             }
@@ -158,9 +183,9 @@ public class movement_controller : MonoBehaviour
                 gp.SetMotorSpeeds(0, 0);
             }
 
-            
-            
-           
+
+
+
             MovePlayer(amount);
         }
         else
@@ -229,8 +254,14 @@ public class movement_controller : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
-            if (collision.GetContact(0).normal.y > 0) // only jump if player collides with ground not walls
+            if (collision.GetContact(0).normal.y > 0)
+            { // only jump if player collides with ground not walls
                 isGrounded = true;
+                animator.Play("Running");
+                animator.SetBool("going_up", false);
+                animator.SetBool("going_down", false);
+                Debug.Log("grounded");
+            }
         }
     }
 
