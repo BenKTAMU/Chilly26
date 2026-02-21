@@ -23,9 +23,67 @@ public class movement_controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void MovePlayer(Vector2 amount)
+    {
+        rb.AddForce(amount.x * acceleration * Vector2.right);
+        if (Math.Abs(rb.linearVelocityX) > max_speed)
+            rb.linearVelocity = new Vector2(max_speed * Math.Sign(rb.linearVelocityX), rb.linearVelocityY);
+
+        if (amount.y > 0)
+        {
+            if (isGrounded)
+            {
+                rb.linearVelocityY = jump_force;
+                startJump = Time.time;
+            }
+            else
+            {
+                if (Time.time - startJump < max_jump_time)
+                {
+                    rb.linearVelocityY = jump_force;
+                }
+            }
+        }
+    }
+
     void FixedUpdate()
     {
-        int direction = 0;
+        Gamepad gp = null;
+        if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
+        if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
+
+        if (gp != null)
+        {
+            float x = gp.leftStick.right.magnitude;
+            if (x == 0) x = -gp.leftStick.left.magnitude;
+            Vector2 amount = new Vector2(x, 0);
+
+            if (gp.aButton.isPressed)
+            {
+                amount.y = 1;
+            }
+
+            MovePlayer(amount);
+        }
+        else
+        {
+            Vector2 direction = new Vector2();
+            if ((Keyboard.current.aKey.isPressed && player1) || (Keyboard.current.leftArrowKey.isPressed && !player1))
+            {
+                direction.x = -1;
+            }
+            else if ((Keyboard.current.dKey.isPressed && player1) || (Keyboard.current.rightArrowKey.isPressed && !player1))
+            {
+                direction.x = 1;
+            }
+
+            if ((Keyboard.current.wKey.isPressed && player1) || (Keyboard.current.upArrowKey.isPressed && !player1))
+            {
+                direction.y = 1;
+            }
+        }
+
+        /*int direction = 0;
         if ((Keyboard.current.aKey.isPressed && player1) || (Keyboard.current.leftArrowKey.isPressed && !player1))
         {
             direction = -1;
@@ -53,6 +111,7 @@ public class movement_controller : MonoBehaviour
         rb.AddForce(direction * acceleration * Vector2.right);
         if (Math.Abs(rb.linearVelocityX) > max_speed)
             rb.linearVelocity = new Vector2(max_speed * Math.Sign(rb.linearVelocityX), rb.linearVelocityY);
+            */
     }
 
     void OnCollisionEnter2D(Collision2D collision)
