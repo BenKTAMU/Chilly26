@@ -866,6 +866,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1283256045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1283256046}
+  m_Layer: 0
+  m_Name: player2Start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1283256046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283256045}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4, y: 4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1439649409
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +914,7 @@ GameObject:
   - component: {fileID: 1439649417}
   - component: {fileID: 1439649416}
   - component: {fileID: 1439649418}
+  - component: {fileID: 1439649419}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player 2
@@ -907,6 +939,7 @@ MonoBehaviour:
   max_speed: 7
   max_jump_time: 0.3
   player1: 0
+  start_position: {fileID: 1283256046}
 --- !u!50 &1439649411
 Rigidbody2D:
   serializedVersion: 5
@@ -1111,8 +1144,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::healthAndDamage
   health: 100
+  total_health: 100
   hit_amount: 5
   smack_amount: 50
+--- !u!95 &1439649419
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439649409}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1580355972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1580355973}
+  m_Layer: 0
+  m_Name: player1Start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1580355973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580355972}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4, y: 4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1645344906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,6 +1355,7 @@ GameObject:
   - component: {fileID: 1672170847}
   - component: {fileID: 1672170846}
   - component: {fileID: 1672170848}
+  - component: {fileID: 1672170849}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player 1
@@ -1441,6 +1529,7 @@ MonoBehaviour:
   max_speed: 7
   max_jump_time: 0.3
   player1: 1
+  start_position: {fileID: 1580355973}
 --- !u!114 &1672170845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1496,8 +1585,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::healthAndDamage
   health: 100
+  total_health: 100
   hit_amount: 5
   smack_amount: 50
+--- !u!95 &1672170849
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672170839}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9f899158bdebfca4885fe3bad05fde22, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1855753693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,5 +2065,7 @@ SceneRoots:
   - {fileID: 1645344909}
   - {fileID: 2105212099}
   - {fileID: 181935598}
+  - {fileID: 1580355973}
+  - {fileID: 1283256046}
   - {fileID: 1672170843}
   - {fileID: 1439649414}

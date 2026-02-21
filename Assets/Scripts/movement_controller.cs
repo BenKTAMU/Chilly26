@@ -24,12 +24,24 @@ public class movement_controller : MonoBehaviour
     private float leftPower = -1.0f;
     private float rightPower = -1.0f;
 
+    public Transform start_position;
+    private healthAndDamage health;
+    private confidence confidence;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         meleeAttack = GetComponent<meleeAttack>();
         rangedAttack = GetComponent<rangedAttack>();
+        health = GetComponent<healthAndDamage>();
+        confidence = GetComponent<confidence>();
+    }
+
+    public void Reset()
+    {
+        rb.transform.position = start_position.position;
+        health.health = health.total_health;
     }
 
     void Rumble(float lowFreq, float highFreq, float duration)
@@ -38,7 +50,7 @@ public class movement_controller : MonoBehaviour
         if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
         if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
         if (gp == null) return;
-        //StartCoroutine(RumbleCoroutine(lowFreq, highFreq, duration, gp));
+        StartCoroutine(RumbleCoroutine(lowFreq, highFreq, duration, gp));
     }
     
     private IEnumerator RumbleCoroutine(float lowFreq, float highFreq, float duration, Gamepad gp)
@@ -73,6 +85,12 @@ public class movement_controller : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (health.health <= 0)
+        {
+            GameObject.FindWithTag("Player 1").GetComponent<movement_controller>().Reset();
+            GameObject.FindWithTag("Player 2").GetComponent<movement_controller>().Reset();
+        }
+
         Gamepad gp = null;
         if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
         if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
@@ -161,6 +179,18 @@ public class movement_controller : MonoBehaviour
             {
                 direction.y = 1;
             }
+
+            if ((Keyboard.current.digit1Key.isPressed && player1) || (Keyboard.current.periodKey.isPressed && !player1))
+            {
+                meleeAttack.Hit(direction);
+            }
+
+            if ((Keyboard.current.digit2Key.isPressed && player1) || (Keyboard.current.slashKey.isPressed && !player1))
+            {
+                rangedAttack.SetAim(direction);
+                rangedAttack.Shoot();
+            }
+
             MovePlayer(direction);
         }
 
