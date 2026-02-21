@@ -102,6 +102,7 @@ public class movement_controller : MonoBehaviour
             {
                 direction.y = 1;
             }
+            MovePlayer(direction);
         }
 
         /*int direction = 0;
