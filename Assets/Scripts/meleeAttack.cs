@@ -13,6 +13,7 @@ public class meleeAttack : MonoBehaviour
     }
     public void Hit()
     {
+        Debug.Log("Hit");
         Invoke("ActivateHitbox", 0.2f);
         Invoke("DeactivateHitbox", 0.4f);
     }
