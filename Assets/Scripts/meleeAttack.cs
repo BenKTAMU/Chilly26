@@ -29,24 +29,25 @@ public class meleeAttack : MonoBehaviour
 
     void ActivateHitbox()
     {
-        if (!didOffset)
+        //hitbox.gameObject.transform.localPosition = direction;
+        /*if (!didOffset)
         {
             Vector3 direction3 = direction;
             hitbox.gameObject.transform.position += direction3;
             didOffset = true;
-        }
+        }*/
         hitbox.gameObject.SetActive(true);
         sr.enabled = true;
     }
 
     void DeactivateHitbox()
     {
-        if (didOffset)
+        /*if (didOffset)
         {
             Vector3 direction3 = direction;
             hitbox.gameObject.transform.position -= direction3;
             didOffset = false;
-        }
+        }*/
         hitbox.gameObject.SetActive(false);
         sr.enabled = false;
     }

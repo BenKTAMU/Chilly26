@@ -28,13 +28,11 @@ public class healthAndDamage : MonoBehaviour
     {
         health -= hit_amount;
         healthBar.fillAmount = health / total_health;
-        Debug.Log("Hit: " + health);
     }
 
     public void smack()
     {
         health -= smack_amount;
         healthBar.fillAmount = health / total_health;
-        Debug.Log("Smacked: " + health);
     }
 }

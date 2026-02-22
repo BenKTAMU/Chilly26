@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,6 +37,8 @@ public class movement_controller : MonoBehaviour
 
     private Vector2 last_direction;
 
+    private int swing_frames = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -62,20 +65,29 @@ public class movement_controller : MonoBehaviour
         animator.SetBool("going_up", false);
     }
 
+
+    private long rumbling_count = 0;
     void Rumble(float lowFreq, float highFreq, float duration)
     {
         Gamepad gp = null;
         if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
         if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
         if (gp == null) return;
+        Debug.Log("Rumblign");
         StartCoroutine(RumbleCoroutine(lowFreq, highFreq, duration, gp));
     }
 
     private IEnumerator RumbleCoroutine(float lowFreq, float highFreq, float duration, Gamepad gp)
     {
+        Interlocked.Increment(ref rumbling_count);
         gp.SetMotorSpeeds(lowFreq, highFreq);
+        Debug.Log("Started: " + lowFreq + ", " + highFreq + ", " + duration);
         yield return new WaitForSeconds(duration);
-        gp.SetMotorSpeeds(0, 0);
+        Debug.Log("Stopped");
+        Interlocked.Decrement(ref rumbling_count);
+        long count = Interlocked.Read(ref rumbling_count);
+        if (count == 0)
+            gp.SetMotorSpeeds(0, 0);
     }
 
     private bool facing_left = false;
@@ -112,16 +124,16 @@ public class movement_controller : MonoBehaviour
         {
             if (isGrounded)
             {
-                Debug.Log(arm.transform.position);
                 arm.transform.localPosition = new Vector2(-0.397f, -0.184f);
-                Debug.Log("new: " + arm.transform.position);
                 animator.Play("Jump Up");
-                arm_animator.Play("Jump Up");
+                if (swing_frames <= 0)
+                    arm_animator.Play("Jump Up");
                 just_started_up = true;
                 animator.SetBool("going_up", true);
                 animator.SetBool("going_down", false);
                 rb.linearVelocityY = jump_force;
                 startJump = Time.time;
+                Rumble(1.0f, 0.0f, 0.2f);
             }
             else
             {
@@ -133,7 +145,8 @@ public class movement_controller : MonoBehaviour
         }
         else if (rb.linearVelocityY < -0.1)
         {
-            arm_animator.Play("Jump Down");
+            if (swing_frames <= 0)
+                arm_animator.Play("Jump Down");
             animator.Play("Jump Down");
             arm.transform.localPosition = new Vector2(-0.475f, -0.141f);
             animator.SetBool("going_down", true);
@@ -143,17 +156,18 @@ public class movement_controller : MonoBehaviour
         {
             if (Math.Abs(rb.linearVelocityX) > 0.1)
             {
-                arm_animator.Play("Running");
+                if (swing_frames <= 0)
+                    arm_animator.Play("Running");
                 animator.Play("Running");
                 arm.transform.localPosition = new Vector2(0.287f, 0.086f);
             }
             else
             {
-                arm_animator.Play("Idle");
+                if (swing_frames <= 0)
+                    arm_animator.Play("Idle");
                 animator.Play("Idle");
-                arm.transform.localPosition = new Vector2(0.287f, 0.086f);
+                arm.transform.localPosition = new Vector2(-0.206f, -0.168f);
             }
-
         }
 
 
@@ -161,6 +175,8 @@ public class movement_controller : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (swing_frames > 0) swing_frames--;
+
         if (health.health <= 0)
         {
             GameObject.FindWithTag("Player 1").GetComponent<movement_controller>().Reset();
@@ -184,7 +200,11 @@ public class movement_controller : MonoBehaviour
 
             if (gp.xButton.isPressed)
             {
-                meleeAttack.Hit(amount);
+                arm.transform.localPosition = new Vector2(0.16f, -0.168f);
+                meleeAttack.Hit(facing_left ? Vector2.left : Vector2.right);
+                arm_animator.Play("Hit");
+                Rumble(0.0f, 0.7f, 0.4f);
+                swing_frames = 60;
             }
 
             if (gp.rightTrigger.isPressed)
@@ -194,7 +214,7 @@ public class movement_controller : MonoBehaviour
                 direction.y = gp.leftStick.up.magnitude;
                 if (direction.y == 0) direction.y = -gp.leftStick.down.magnitude;
 
-                rangedAttack.SetAim(direction);
+                rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
                 rangedAttack.Shoot();
 
                 leftPower = 0.5f;
@@ -204,15 +224,11 @@ public class movement_controller : MonoBehaviour
             }
 
 
-            Debug.Log(rightPower + " " + leftPower);
-            if (amount.x < 0)
-            {
-                leftPower = rightPower;
-                rightPower = leftPower;
-            }
             if (rightPower > -0.01)
             {
-                gp.SetMotorSpeeds(leftPower, rightPower);
+                if (facing_left)
+                    gp.SetMotorSpeeds(rightPower, leftPower * 1.5f);
+                else gp.SetMotorSpeeds(leftPower, rightPower);
 
                 if (leftPower > 0)
                 {
@@ -225,13 +241,15 @@ public class movement_controller : MonoBehaviour
                     if (rightPower > 0.5f)
                     {
                         rightPower = -1.0f;
-
+                        gp.SetMotorSpeeds(0, 0);
                     }
                 }
             }
             else
             {
-                gp.SetMotorSpeeds(0, 0);
+                long waiting = Interlocked.Read(ref rumbling_count);
+                if (waiting > 0)
+                    gp.SetMotorSpeeds(0, 0);
             }
 
 
@@ -258,12 +276,15 @@ public class movement_controller : MonoBehaviour
 
             if ((Keyboard.current.digit1Key.isPressed && player1) || (Keyboard.current.periodKey.isPressed && !player1))
             {
-                meleeAttack.Hit(direction);
+                arm.transform.localPosition = new Vector2(0.16f, -0.015f);
+                meleeAttack.Hit(facing_left ? Vector2.right : Vector2.left);
+                arm_animator.Play("Hit");
+                swing_frames = 60;
             }
 
             if ((Keyboard.current.digit2Key.isPressed && player1) || (Keyboard.current.slashKey.isPressed && !player1))
             {
-                rangedAttack.SetAim(direction);
+                rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
                 rangedAttack.Shoot();
             }
 
@@ -308,11 +329,12 @@ public class movement_controller : MonoBehaviour
             if (collision.GetContact(0).normal.y > 0)
             { // only jump if player collides with ground not walls
                 isGrounded = true;
+                Rumble(1.0f, 0.0f, rb.linearVelocityY);
                 if (Math.Abs(rb.linearVelocity.x) < 0.1)
                 {
                     animator.Play("Idle");
                     arm_animator.Play("Idle");
-                    arm.transform.localPosition = new Vector2(0.287f, 0.086f);
+                    arm.transform.localPosition = new Vector2(-0.206f, -0.168f);
                 }
                 else
                 {

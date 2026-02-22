@@ -17,7 +17,6 @@ public class HitScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         GameObject player = other.gameObject;
-        Debug.Log(player.tag);
         player.GetComponent<healthAndDamage>().hit();
         player.GetComponent<confidence>().resetMultiplier();
     }
