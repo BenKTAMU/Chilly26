@@ -13,6 +13,9 @@ public class movement_controller : MonoBehaviour
 
     public bool player1 = true;
 
+    public GameObject arm;
+    private SpriteRenderer asr;
+
     private Rigidbody2D rb;
 
     private bool isGrounded = false;
@@ -30,6 +33,7 @@ public class movement_controller : MonoBehaviour
     private confidence confidence;
     private SpriteRenderer sr;
     private Animator animator;
+    private Animator arm_animator;
 
     private Vector2 last_direction;
     
@@ -46,11 +50,17 @@ public class movement_controller : MonoBehaviour
         confidence = GetComponent<confidence>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        arm.transform.SetParent(transform, worldPositionStays: true);
+        asr = arm.GetComponent<SpriteRenderer>();
+        arm_animator = arm.GetComponent<Animator>();
     }
 
     public void Reset()
     {
         rb.transform.position = start_position.position;
+        rb.linearVelocity = Vector2.zero;
+
         health.health = health.total_health;
         animator.SetBool("going_down", true);
         animator.SetBool("going_up", false);
@@ -75,13 +85,32 @@ public class movement_controller : MonoBehaviour
         gp.SetMotorSpeeds(0, 0);
     }
 
+    private bool facing_left = false;
     void MovePlayer(Vector2 amount)
     {
         rb.AddForce(amount.x * acceleration * Vector2.right);
         if (Math.Abs(rb.linearVelocityX) > max_speed)
             rb.linearVelocity = new Vector2(max_speed * Math.Sign(rb.linearVelocityX), rb.linearVelocityY);
 
-        sr.flipX = amount.x < 0 || (amount.x == 0 && last_direction.x < 0);
+
+        if (amount.x < -0.1)
+        {
+            if (!facing_left)
+            {
+                facing_left = true;
+                transform.Rotate(new Vector3(0, 180, 0));
+            }
+        }
+        else if (amount.x > 0.1)
+        {
+            if (facing_left)
+            {
+                transform.Rotate(new Vector3(0, -180, 0));
+                facing_left = false;
+            }
+        }
+
+
         if (amount.x != 0) last_direction.x = amount.x;
 
         bool just_started_up = false;
@@ -90,7 +119,11 @@ public class movement_controller : MonoBehaviour
         {
             if (isGrounded)
             {
+                Debug.Log(arm.transform.position);
+                arm.transform.localPosition = new Vector2(-0.397f, -0.184f);
+                Debug.Log("new: " + arm.transform.position);
                 animator.Play("Jump Up");
+                arm_animator.Play("Jump Up");
                 just_started_up = true;
                 animator.SetBool("going_up", true);
                 animator.SetBool("going_down", false);
@@ -105,13 +138,31 @@ public class movement_controller : MonoBehaviour
                 }
             }
         }
-
         else if (rb.linearVelocityY < -0.1)
         {
+            arm_animator.Play("Jump Down");
             animator.Play("Jump Down");
+            arm.transform.localPosition = new Vector2(-0.475f, -0.141f);
             animator.SetBool("going_down", true);
             animator.SetBool("going_up", false);
         }
+        else
+        {
+            if (Math.Abs(rb.linearVelocityX) > 0.1)
+            {
+                arm_animator.Play("Running");
+                animator.Play("Running");
+                arm.transform.localPosition = new Vector2(0.287f, 0.086f);
+            }
+            else
+            {
+                arm_animator.Play("Idle");
+                animator.Play("Idle");
+                arm.transform.localPosition = new Vector2(0.287f, 0.086f);
+            }
+
+        }
+
 
     }
 
@@ -265,10 +316,18 @@ public class movement_controller : MonoBehaviour
             if (collision.GetContact(0).normal.y > 0)
             { // only jump if player collides with ground not walls
                 isGrounded = true;
-                animator.Play("Running");
-                animator.SetBool("going_up", false);
-                animator.SetBool("going_down", false);
-                Debug.Log("grounded");
+                if (Math.Abs(rb.linearVelocity.x) < 0.1)
+                {
+                    animator.Play("Idle");
+                    arm_animator.Play("Idle");
+                    arm.transform.localPosition = new Vector2(0.287f, 0.086f);
+                }
+                else
+                {
+                    arm_animator.Play("Running");
+                    animator.Play("Running");
+                    arm.transform.localPosition = new Vector2(0.287f, 0.086f);
+                }
             }
         }
     }
