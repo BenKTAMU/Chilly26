@@ -301,7 +301,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -368,6 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6eb8631e9bdc14e8cca1d7d1e5768c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  parent: {fileID: 1672170839}
 --- !u!1 &181935595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,7 +1395,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1461,6 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6eb8631e9bdc14e8cca1d7d1e5768c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitScript
+  parent: {fileID: 1439649409}
 --- !u!1 &710930596
 GameObject:
   m_ObjectHideFlags: 0
@@ -2386,6 +2388,8 @@ MonoBehaviour:
   total_health: 100
   hit_amount: 5
   smack_amount: 50
+  hit_impulse: 5
+  smack_impulse: 10
   healthBar: {fileID: 399471942}
 --- !u!95 &1439649419
 Animator:
@@ -3108,6 +3112,8 @@ MonoBehaviour:
   total_health: 100
   hit_amount: 5
   smack_amount: 50
+  hit_impulse: 5
+  smack_impulse: 10
   healthBar: {fileID: 1599102574}
 --- !u!95 &1672170849
 Animator:
@@ -3694,5 +3700,4 @@ SceneRoots:
   - {fileID: 1672170843}
   - {fileID: 1439649414}
   - {fileID: 1512899496}
-  - {fileID: 1484635390}
   - {fileID: 1484635390}

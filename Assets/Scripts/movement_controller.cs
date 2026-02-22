@@ -80,7 +80,6 @@ public class movement_controller : MonoBehaviour
         if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
         if (Gamepad.all.Count >= 2 && !player1) gp = Gamepad.all[1];
         if (gp == null) return;
-        Debug.Log("Rumblign");
         StartCoroutine(RumbleCoroutine(lowFreq, highFreq, duration, gp));
     }
 
@@ -88,9 +87,7 @@ public class movement_controller : MonoBehaviour
     {
         Interlocked.Increment(ref rumbling_count);
         gp.SetMotorSpeeds(lowFreq, highFreq);
-        Debug.Log("Started: " + lowFreq + ", " + highFreq + ", " + duration);
         yield return new WaitForSeconds(duration);
-        Debug.Log("Stopped");
         Interlocked.Decrement(ref rumbling_count);
         long count = Interlocked.Read(ref rumbling_count);
         if (count == 0)

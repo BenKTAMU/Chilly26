@@ -31,7 +31,7 @@ public class projectile : MonoBehaviour
             double confidence = other.GetComponent<confidence>().getMultiplier();
             other.GetComponent<confidence>().resetMultiplier();
 
-            other.GetComponent<healthAndDamage>().smack();
+            other.GetComponent<healthAndDamage>().smack(other.gameObject.transform.position - gameObject.transform.position);
         }
 
 
