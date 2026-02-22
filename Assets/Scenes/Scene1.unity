@@ -3447,7 +3447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   acceleration: 50
   jump_force: 13
-  max_speed: 7
+  max_speed: 9
   max_jump_time: 0.3
   player1: 0
   arm: {fileID: 1346035190}
@@ -3595,7 +3595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439649409}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 8.93, y: 14.79, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3604,7 +3604,7 @@ Transform:
   - {fileID: 693239312}
   - {fileID: 1855753694}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1439649415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4400,7 +4400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   acceleration: 50
   jump_force: 13
-  max_speed: 7
+  max_speed: 9
   max_jump_time: 0.3
   player1: 1
   arm: {fileID: 710930596}

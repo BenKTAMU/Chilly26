@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 
@@ -15,8 +16,8 @@ public class rangedAttack : MonoBehaviour
     private Vector2 aimDirection = Vector2.right;
 
     public float startOffsetAmount = 1;
-    
-    
+
+
 
 
 
@@ -61,15 +62,21 @@ public class rangedAttack : MonoBehaviour
         }
     }*/
 
-    public void Shoot()
+    public bool Shoot()
     {
-        if (shotTimer > 0) return;
+        if (GetComponent<confidence>().getMultiplier() < 4.9) return false;
+
+        if (shotTimer > 0) return false;
         shotTimer = shotCooldown;
 
-        Vector3 aimDirection3 = aimDirection * startOffsetAmount;
+        Vector3 aimDirection3 = aimDirection * startOffsetAmount * 3;
 
         GameObject projectile = Instantiate(projectilePrefab, launchPoint.position + aimDirection3, Quaternion.identity);
         projectile.GetComponent<projectile>().direction = aimDirection;
         projectile.GetComponent<projectile>().sender = gameObject.tag;
+
+        GetComponent<confidence>().resetMultiplier();
+
+        return true;
     }
 }

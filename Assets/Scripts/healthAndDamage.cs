@@ -29,7 +29,6 @@ public class healthAndDamage : MonoBehaviour
 
     public void hit(Vector2 directionToMe)
     {
-        Debug.Log("Impulsing hit");
         Vector2 newPos = gameObject.GetComponent<Rigidbody2D>().transform.position;
         newPos.y += 0.1f;
         gameObject.GetComponent<Rigidbody2D>().transform.position = newPos;
@@ -40,7 +39,6 @@ public class healthAndDamage : MonoBehaviour
 
     public void smack(Vector2 directionToMe)
     {
-        Debug.Log("Impulsing smack");
         gameObject.GetComponent<Rigidbody2D>().AddForce(directionToMe * smack_impulse, ForceMode2D.Force);
         health -= smack_amount;
         healthBar.fillAmount = health / total_health;

@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class projectile : MonoBehaviour
@@ -36,10 +37,7 @@ public class projectile : MonoBehaviour
             other.GetComponent<confidence>().resetMultiplier();
 
             other.GetComponent<healthAndDamage>().smack(other.gameObject.transform.position - gameObject.transform.position);
+            Destroy(gameObject);
         }
-
-
-
-        Destroy(gameObject);
     }
 }

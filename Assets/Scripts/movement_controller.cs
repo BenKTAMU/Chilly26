@@ -66,6 +66,8 @@ public class movement_controller : MonoBehaviour
         arm.transform.SetParent(transform, worldPositionStays: true);
         asr = arm.GetComponent<SpriteRenderer>();
         arm_animator = arm.GetComponent<Animator>();
+
+        facing_left = !player1;
     }
 
     void PauseAndShowScore()
@@ -238,19 +240,16 @@ public class movement_controller : MonoBehaviour
                 if (direction.y == 0) direction.y = -gp.leftStick.down.magnitude;
 
                 rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
-                rangedAttack.Shoot();
-
-                arm.transform.localPosition = new Vector2(-0.16f, 0.38f);
-                arm_animator.Play("Throw");
-                swing_frames = 20;
+                if (rangedAttack.Shoot())
+                {
+                    arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
+                    arm_animator.Play("Throw");
+                    swing_frames = 20;
+                }
 
                 leftPower = 0.5f;
                 rightPower = 0f;
                 StartCoroutine(ShootRumbleStop(gp, 1.0f));
-
-                confidence.resetMultiplier();
-
-
             }
 
 
@@ -306,14 +305,15 @@ public class movement_controller : MonoBehaviour
                 swing_frames = 20;
             }
 
-            if ((Keyboard.current.digit2Key.isPressed && player1) || (Keyboard.current.slashKey.isPressed && !player1))
+            if (((Keyboard.current.digit2Key.isPressed && player1) || (Keyboard.current.slashKey.isPressed && !player1)) && confidence.getMultiplier() > 4.9)
             {
-                arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
-                arm_animator.Play("Throw");
-                swing_frames = 20;
-
                 rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
-                rangedAttack.Shoot();
+                if (rangedAttack.Shoot())
+                {
+                    arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
+                    arm_animator.Play("Throw");
+                    swing_frames = 20;
+                }
             }
 
             MovePlayer(direction);
@@ -365,7 +365,6 @@ public class movement_controller : MonoBehaviour
             if (collision.GetContact(0).normal.y > 0)
             { // only jump if player collides with ground not walls
                 isGrounded = true;
-                Debug.Log(collision.relativeVelocity);
                 Rumble(Math.Abs(collision.relativeVelocity.y) / 50, 0.0f, Math.Abs(collision.relativeVelocity.y) / 200);
                 if (Math.Abs(rb.linearVelocity.x) < 0.1)
                 {
