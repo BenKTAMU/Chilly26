@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class movement_controller : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class movement_controller : MonoBehaviour
 
     private Vector2 last_direction;
 
+    public Image healthBar;
+
+
     private int swing_frames = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -63,6 +67,9 @@ public class movement_controller : MonoBehaviour
         health.health = health.total_health;
         animator.SetBool("going_down", true);
         animator.SetBool("going_up", false);
+        rb.linearVelocity = Vector2.zero;
+        healthBar.fillAmount = 1;
+        confidence.resetMultiplier();
     }
 
 
@@ -207,7 +214,7 @@ public class movement_controller : MonoBehaviour
                 swing_frames = 60;
             }
 
-            if (gp.rightTrigger.isPressed)
+            if (gp.rightTrigger.isPressed && confidence.getMultiplier() == 5)
             {
                 Vector2 direction = new Vector2();
                 direction.x = x;
@@ -219,6 +226,8 @@ public class movement_controller : MonoBehaviour
 
                 leftPower = 0.5f;
                 rightPower = 0f;
+
+                confidence.resetMultiplier();
 
 
             }
