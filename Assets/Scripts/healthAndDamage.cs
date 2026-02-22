@@ -29,16 +29,19 @@ public class healthAndDamage : MonoBehaviour
 
     public void hit(Vector2 directionToMe)
     {
-        gameObject.GetComponent<movement_controller>().Rumble(0.7f, 0.0f, 0.05f);
-        gameObject.GetComponent<Rigidbody2D>().AddForce(directionToMe * hit_impulse, ForceMode2D.Impulse);
+        Debug.Log("Impulsing hit");
+        Vector2 newPos = gameObject.GetComponent<Rigidbody2D>().transform.position;
+        newPos.y += 0.1f;
+        gameObject.GetComponent<Rigidbody2D>().transform.position = newPos;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(directionToMe * hit_impulse + Vector2.up * 0.1f, ForceMode2D.Force);
         health -= hit_amount;
         healthBar.fillAmount = health / total_health;
     }
 
     public void smack(Vector2 directionToMe)
     {
-        gameObject.GetComponent<movement_controller>().Rumble(1.0f, 0.7f, 0.4f);
-        gameObject.GetComponent<Rigidbody2D>().AddForce(directionToMe * smack_impulse, ForceMode2D.Impulse);
+        Debug.Log("Impulsing smack");
+        gameObject.GetComponent<Rigidbody2D>().AddForce(directionToMe * smack_impulse, ForceMode2D.Force);
         health -= smack_amount;
         healthBar.fillAmount = health / total_health;
     }
