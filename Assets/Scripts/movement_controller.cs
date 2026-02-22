@@ -51,7 +51,7 @@ public class movement_controller : MonoBehaviour
     private int swing_frames = 0;
 
     public GameObject winnerPanel;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -71,7 +71,7 @@ public class movement_controller : MonoBehaviour
     void PauseAndShowScore()
     {
         winnerPanel.SetActive(true);
-        
+
     }
 
     public void Reset()
@@ -250,7 +250,7 @@ public class movement_controller : MonoBehaviour
                 rangedAttack.Shoot();
 
                 arm.transform.localPosition = new Vector2(-0.16f, 0.38f);
-                arm_animator.Play("Hit");
+                arm_animator.Play("Throw");
                 swing_frames = 20;
 
                 leftPower = 0.5f;
@@ -309,7 +309,7 @@ public class movement_controller : MonoBehaviour
 
             if ((Keyboard.current.digit1Key.isPressed && player1) || (Keyboard.current.periodKey.isPressed && !player1))
             {
-                arm.transform.localPosition = new Vector2(-0.16f, 0.38f);
+                arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
                 meleeAttack.Hit(facing_left ? Vector2.right : Vector2.left);
                 arm_animator.Play("Hit");
                 swing_frames = 20;
@@ -317,8 +317,8 @@ public class movement_controller : MonoBehaviour
 
             if ((Keyboard.current.digit2Key.isPressed && player1) || (Keyboard.current.slashKey.isPressed && !player1))
             {
-                arm.transform.localPosition = new Vector2(-0.16f, 0.38f);
-                arm_animator.Play("Hit");
+                arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
+                arm_animator.Play("Throw");
                 swing_frames = 20;
 
                 rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);

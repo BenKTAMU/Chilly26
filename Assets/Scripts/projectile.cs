@@ -14,6 +14,10 @@ public class projectile : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, lifetime);
+        if (direction.x < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
     }
 
     // Update is called once per frame

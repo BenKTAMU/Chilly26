@@ -733,7 +733,7 @@ Animator:
   m_GameObject: {fileID: 387141653}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 889857aaec26afb4387f125023895f32, type: 2}
+  m_Controller: {fileID: 9100000, guid: aac697deb0af6ad4bbca7dcc3963e1e1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2318,7 +2318,7 @@ Animator:
   m_GameObject: {fileID: 1346035190}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a43c98f4aa6a27c49a08c8efc7364ed5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 41c88dab6a1c8f3459f2a3e800f86f34, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2655,7 +2655,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.19, y: 3.02, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1346035191}
@@ -2735,7 +2735,7 @@ Animator:
   m_GameObject: {fileID: 1439649409}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9f899158bdebfca4885fe3bad05fde22, type: 2}
+  m_Controller: {fileID: 9100000, guid: bd0ce57913c61454abb8c33702b713be, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3436,7 +3436,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.9, y: 2.663, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 710930599}
