@@ -74,7 +74,7 @@ public class movement_controller : MonoBehaviour
 
 
     private long rumbling_count = 0;
-    void Rumble(float lowFreq, float highFreq, float duration)
+    public void Rumble(float lowFreq, float highFreq, float duration)
     {
         Gamepad gp = null;
         if (Gamepad.all.Count >= 1 && player1) gp = Gamepad.all[0];
@@ -89,9 +89,7 @@ public class movement_controller : MonoBehaviour
         gp.SetMotorSpeeds(lowFreq, highFreq);
         yield return new WaitForSeconds(duration);
         Interlocked.Decrement(ref rumbling_count);
-        long count = Interlocked.Read(ref rumbling_count);
-        if (count == 0)
-            gp.SetMotorSpeeds(0, 0);
+        gp.SetMotorSpeeds(0, 0);
     }
 
     private bool facing_left = false;
@@ -137,7 +135,7 @@ public class movement_controller : MonoBehaviour
                 animator.SetBool("going_down", false);
                 rb.linearVelocityY = jump_force;
                 startJump = Time.time;
-                Rumble(1.0f, 0.0f, 0.2f);
+                Rumble(1.0f, 0.0f, 0.05f);
             }
             else
             {
@@ -207,7 +205,7 @@ public class movement_controller : MonoBehaviour
                 arm.transform.localPosition = new Vector2(0.16f, -0.168f);
                 meleeAttack.Hit(facing_left ? Vector2.left : Vector2.right);
                 arm_animator.Play("Hit");
-                Rumble(0.0f, 0.7f, 0.4f);
+                Rumble(0.0f, 0.7f, 0.1f);
                 swing_frames = 60;
             }
 
@@ -223,6 +221,7 @@ public class movement_controller : MonoBehaviour
 
                 leftPower = 0.5f;
                 rightPower = 0f;
+                StartCoroutine(ShootRumbleStop(gp, 1.0f));
 
                 confidence.resetMultiplier();
 
@@ -242,7 +241,7 @@ public class movement_controller : MonoBehaviour
                 }
                 else
                 {
-                    leftPower = 0;
+                    leftPower = -1f;
                     rightPower += 0.1f;
                     if (rightPower > 0.5f)
                     {
@@ -250,12 +249,6 @@ public class movement_controller : MonoBehaviour
                         gp.SetMotorSpeeds(0, 0);
                     }
                 }
-            }
-            else
-            {
-                long waiting = Interlocked.Read(ref rumbling_count);
-                if (waiting > 0)
-                    gp.SetMotorSpeeds(0, 0);
             }
 
 
@@ -328,6 +321,14 @@ public class movement_controller : MonoBehaviour
             */
     }
 
+    IEnumerator ShootRumbleStop(Gamepad gp, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        leftPower = -1f;
+        rightPower = -1f;
+        gp.SetMotorSpeeds(0, 0);
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("ground"))
@@ -335,7 +336,8 @@ public class movement_controller : MonoBehaviour
             if (collision.GetContact(0).normal.y > 0)
             { // only jump if player collides with ground not walls
                 isGrounded = true;
-                Rumble(1.0f, 0.0f, rb.linearVelocityY);
+                Debug.Log(collision.relativeVelocity);
+                Rumble(Math.Abs(collision.relativeVelocity.y) / 50, 0.0f, Math.Abs(collision.relativeVelocity.y) / 200);
                 if (Math.Abs(rb.linearVelocity.x) < 0.1)
                 {
                     animator.Play("Idle");
