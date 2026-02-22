@@ -51,7 +51,7 @@ public class movement_controller : MonoBehaviour
     private int swing_frames = 0;
 
     public GameObject winnerPanel;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -71,7 +71,7 @@ public class movement_controller : MonoBehaviour
     void PauseAndShowScore()
     {
         winnerPanel.SetActive(true);
-        
+
     }
 
     public void Reset()
@@ -141,7 +141,7 @@ public class movement_controller : MonoBehaviour
         {
             if (isGrounded)
             {
-                arm.transform.localPosition = new Vector2(-0.397f, -0.184f);
+                arm.transform.localPosition = new Vector2(-0.197f, -0.184f);
                 animator.Play("Jump Up");
                 if (swing_frames <= 0)
                     arm_animator.Play("Jump Up");
@@ -174,16 +174,20 @@ public class movement_controller : MonoBehaviour
             if (Math.Abs(rb.linearVelocityX) > 0.1)
             {
                 if (swing_frames <= 0)
+                {
                     arm_animator.Play("Running");
+                    arm.transform.localPosition = new Vector2(0.287f, 0.086f);
+                }
                 animator.Play("Running");
-                arm.transform.localPosition = new Vector2(0.287f, 0.086f);
             }
             else
             {
                 if (swing_frames <= 0)
+                {
                     arm_animator.Play("Idle");
+                    arm.transform.localPosition = new Vector2(-0.206f, -0.168f);
+                }
                 animator.Play("Idle");
-                arm.transform.localPosition = new Vector2(-0.206f, -0.168f);
             }
         }
 
@@ -227,11 +231,12 @@ public class movement_controller : MonoBehaviour
 
             if (gp.xButton.isPressed)
             {
-                arm.transform.localPosition = new Vector2(0.16f, -0.168f);
-                meleeAttack.Hit(facing_left ? Vector2.left : Vector2.right);
+                arm.transform.localPosition = new Vector2(-0.16f, 0.38f);
                 arm_animator.Play("Hit");
+                swing_frames = 20;
+
+                meleeAttack.Hit(facing_left ? Vector2.left : Vector2.right);
                 Rumble(0.0f, 0.7f, 0.1f);
-                swing_frames = 60;
             }
 
             if (gp.rightTrigger.isPressed && confidence.getMultiplier() == 5)
@@ -243,6 +248,10 @@ public class movement_controller : MonoBehaviour
 
                 rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
                 rangedAttack.Shoot();
+
+                arm.transform.localPosition = new Vector2(-0.16f, 0.38f);
+                arm_animator.Play("Throw");
+                swing_frames = 20;
 
                 leftPower = 0.5f;
                 rightPower = 0f;
@@ -300,14 +309,18 @@ public class movement_controller : MonoBehaviour
 
             if ((Keyboard.current.digit1Key.isPressed && player1) || (Keyboard.current.periodKey.isPressed && !player1))
             {
-                arm.transform.localPosition = new Vector2(0.16f, -0.015f);
+                arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
                 meleeAttack.Hit(facing_left ? Vector2.right : Vector2.left);
                 arm_animator.Play("Hit");
-                swing_frames = 60;
+                swing_frames = 20;
             }
 
             if ((Keyboard.current.digit2Key.isPressed && player1) || (Keyboard.current.slashKey.isPressed && !player1))
             {
+                arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
+                arm_animator.Play("Throw");
+                swing_frames = 20;
+
                 rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
                 rangedAttack.Shoot();
             }
@@ -367,7 +380,7 @@ public class movement_controller : MonoBehaviour
                 {
                     animator.Play("Idle");
                     arm_animator.Play("Idle");
-                    arm.transform.localPosition = new Vector2(-0.206f, -0.168f);
+                    //arm.transform.localPosition = new Vector2(-0.206f, -0.168f);
                 }
                 else
                 {
