@@ -80,8 +80,6 @@ public class movement_controller : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         health.health = health.total_health;
-        animator.SetBool("going_down", true);
-        animator.SetBool("going_up", false);
         rb.linearVelocity = Vector2.zero;
         healthBar.fillAmount = 1;
         confidence.resetMultiplier();
@@ -135,8 +133,6 @@ public class movement_controller : MonoBehaviour
 
         if (amount.x != 0) last_direction.x = amount.x;
 
-        bool just_started_up = false;
-
         if (amount.y > 0)
         {
             if (isGrounded)
@@ -145,9 +141,6 @@ public class movement_controller : MonoBehaviour
                 animator.Play("Jump Up");
                 if (swing_frames <= 0)
                     arm_animator.Play("Jump Up");
-                just_started_up = true;
-                animator.SetBool("going_up", true);
-                animator.SetBool("going_down", false);
                 rb.linearVelocityY = jump_force;
                 startJump = Time.time;
                 Rumble(1.0f, 0.0f, 0.05f);
@@ -166,8 +159,6 @@ public class movement_controller : MonoBehaviour
                 arm_animator.Play("Jump Down");
             animator.Play("Jump Down");
             arm.transform.localPosition = new Vector2(-0.475f, -0.141f);
-            animator.SetBool("going_down", true);
-            animator.SetBool("going_up", false);
         }
         else
         {
