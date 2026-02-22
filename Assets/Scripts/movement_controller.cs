@@ -39,6 +39,11 @@ public class movement_controller : MonoBehaviour
     private Animator animator;
     private Animator arm_animator;
 
+    public AudioSource soundeffects;
+
+    public AudioClip hit_ground;
+    public AudioClip shoot;
+
     private Vector2 last_direction;
 
     public UnityEngine.UI.Image healthBar;
@@ -242,6 +247,7 @@ public class movement_controller : MonoBehaviour
                 rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
                 if (rangedAttack.Shoot())
                 {
+                    soundeffects.PlayOneShot(shoot);
                     arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
                     arm_animator.Play("Throw");
                     swing_frames = 20;
@@ -310,6 +316,7 @@ public class movement_controller : MonoBehaviour
                 rangedAttack.SetAim(facing_left ? Vector2.left : Vector2.right);
                 if (rangedAttack.Shoot())
                 {
+                    soundeffects.PlayOneShot(shoot);
                     arm.transform.localPosition = new Vector2(-0.122f, 0.359f);
                     arm_animator.Play("Throw");
                     swing_frames = 20;
@@ -365,6 +372,7 @@ public class movement_controller : MonoBehaviour
             if (collision.GetContact(0).normal.y > 0)
             { // only jump if player collides with ground not walls
                 isGrounded = true;
+                soundeffects.PlayOneShot(hit_ground);
                 Rumble(Math.Abs(collision.relativeVelocity.y) / 50, 0.0f, Math.Abs(collision.relativeVelocity.y) / 200);
                 if (Math.Abs(rb.linearVelocity.x) < 0.1)
                 {
