@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class movement_controller : MonoBehaviour
 {
@@ -38,11 +41,17 @@ public class movement_controller : MonoBehaviour
 
     private Vector2 last_direction;
 
-    public Image healthBar;
+    public UnityEngine.UI.Image healthBar;
+
+    public TextMeshProUGUI scoreText;
+    int player_one_score = 0;
+    int player_two_score = 0;
 
 
     private int swing_frames = 0;
 
+    public GameObject winnerPanel;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -57,6 +66,12 @@ public class movement_controller : MonoBehaviour
         arm.transform.SetParent(transform, worldPositionStays: true);
         asr = arm.GetComponent<SpriteRenderer>();
         arm_animator = arm.GetComponent<Animator>();
+    }
+
+    void PauseAndShowScore()
+    {
+        winnerPanel.SetActive(true);
+        
     }
 
     public void Reset()
@@ -185,6 +200,16 @@ public class movement_controller : MonoBehaviour
 
         if (health.health <= 0)
         {
+            if (player1)
+            {
+                player_two_score++;
+                scoreText.text = player_one_score + " - " + player_two_score;
+            }
+            else
+            {
+                player_one_score++;
+                scoreText.text = player_one_score + " - " + player_two_score;
+            }
             GameObject.FindWithTag("Player 1").GetComponent<movement_controller>().Reset();
             GameObject.FindWithTag("Player 2").GetComponent<movement_controller>().Reset();
         }

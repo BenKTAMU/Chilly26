@@ -1,4 +1,3 @@
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class meleeAttack : MonoBehaviour
@@ -16,8 +15,8 @@ public class meleeAttack : MonoBehaviour
     }
     public void Hit(Vector2 direction)
     {
-        Invoke("ActivateHitbox", 0.2f);
-        Invoke("DeactivateHitbox", 0.4f);
+        Invoke("ActivateHitbox", 0.1f);
+        Invoke("DeactivateHitbox", 0.2f);
 
         if (!didOffset)
         {
