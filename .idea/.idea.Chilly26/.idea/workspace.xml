@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9d734169-e604-41e5-854e-a1daa00b38bf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Chilly26/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Chilly26/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/confidence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/confidence.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/movement_controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/movement_controller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +110,7 @@
       <workItem from="1771647008291" duration="2198000" />
       <workItem from="1771681390205" duration="13239000" />
       <workItem from="1771701709249" duration="2724000" />
-      <workItem from="1771707475390" duration="7987000" />
+      <workItem from="1771707475390" duration="8595000" />
     </task>
     <servers />
   </component>
